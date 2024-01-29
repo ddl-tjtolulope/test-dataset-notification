@@ -224,7 +224,8 @@ def extract_datasets_by_login_id(csv_file_path, target_login_id):
                     user_name=row['loginId']
                     project_name=row['project_name']
                     format_warning_email(name, user_name, project_name, dataset_id)
-                    send_email(email, contents, subject)
+                    contents, subject = send_email(email, contents, subject)
+                    
 ###New Code####
 # Creates the email warning the user that the workspace is idle for more than 4 hours.
 def format_warning_email(name, user_name, project_name, dataset_id):
@@ -351,3 +352,4 @@ def send_email(email, contents, subject):
     # s.sendmail(msg['From'],  msg["To"].split(",") + msg["Cc"].split(","), msg.as_string())
     s.sendmail(msg["From"], msg["To"], msg.as_string())
     s.quit()
+    return contents, subject
