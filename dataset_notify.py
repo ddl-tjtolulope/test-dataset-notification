@@ -12,10 +12,17 @@ try:
     from urllib.parse import quote_plus
 except ImportError:
     from urllib import quote_plus
-MONGO_USERNAME="teejay"
-MONGO_PASSWORD="teejay25"
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+MONGO_USERNAME="xxxxx"
+MONGO_PASSWORD="xxxxx"
 # MONGO_USERNAME="admin"
 # MONGO_PASSWORD="BICK0NoMy09wowSgZsxDmz8t4EYeoOFT"
+
+# Email variables:
+FROM_EMAIL = "tj.tolulope@dominodatalab.com"
 client = MongoClient(
     'mongodb://mongodb-replicaset.domino-platform.svc.cluster.local:27017',
     username = MONGO_USERNAME,
