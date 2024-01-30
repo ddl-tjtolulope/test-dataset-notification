@@ -17,7 +17,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 MONGO_USERNAME="xxxxx"
-MONGO_PASSWORD="xxxxx"
+MONGO_PASSWORD="xxxxxx"
 # MONGO_USERNAME="admin"
 # MONGO_PASSWORD="BICK0NoMy09wowSgZsxDmz8t4EYeoOFT"
 
@@ -54,8 +54,6 @@ def export_project_datasets(writer,projects):
 #From project ID find the user ID from project collection
 #From user Id get the user email
 #then call the function in Datasets.py passing that email.
-                
-
                 output = {
                     "author_id": snapshot.get('author', snapshot.get('metadata', {}).get('authors', [None])[0]),
                     "firstName": (lambda user_owner_id:
@@ -200,9 +198,6 @@ def extract_datasets_by_login_id(csv_file_path, target_login_id):
     try:
         # Read Datasets.csv
         #datasets = pd.read_csv("/mnt/data-explorer/Datasets.csv")
-        # Filter datasets based on loginId
-        #filtered_datasets = datasets[datasets['loginId'] == target_login_id]
-        # Specify the path to your CSV file
         csv_file_path = '/mnt/data-explorer/Datasets.csv'
         # Open the CSV file
         with open(csv_file_path, newline='') as csvfile:
@@ -225,6 +220,10 @@ def extract_datasets_by_login_id(csv_file_path, target_login_id):
                     project_name=row['project_name']
                     format_warning_email(name, user_name, project_name, dataset_id)
                     contents, subject = send_email(email, contents, subject)
+    except FileNotFoundError:
+      return f"File not found: {'/mnt/data-explorer/Datasets.csv'}"
+    except Exception as e:
+      return f"An error occurred: {str(e)}"
                     
 ###New Code####
 # Creates the email warning the user that the workspace is idle for more than 4 hours.
